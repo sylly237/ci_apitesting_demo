@@ -13,10 +13,10 @@ public class AppTest {
 
     @BeforeAll
     static void setup() {
-        wireMockServer = new WireMockServer(8080);
+        wireMockServer = new WireMockServer(9090);
         wireMockServer.start();
 
-        configureFor("localhost", 8080);
+        configureFor("localhost", 9090);
     }
 
     @AfterAll
@@ -39,7 +39,7 @@ public class AppTest {
                 """)));
 
         given()
-            .baseUri("http://localhost:8080")
+            .baseUri("http://localhost:9090")
         .when()
             .get("/users/1")
         .then()
