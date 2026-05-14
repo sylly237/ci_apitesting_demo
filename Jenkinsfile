@@ -24,11 +24,11 @@ stage('Test') {
 
             docker ps
 
-            curl http://localhost:4444/status
+            curl http://selenium-chrome:4444/status
 
             cd api-test-framework
 
-            mvn test -Dselenium.remote=http://localhost:4444/wd/hub
+            mvn test -Dselenium.remote=http://selenium-chrome:4444/wd/hub
         '''
     }
 
