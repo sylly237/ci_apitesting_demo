@@ -17,7 +17,7 @@ stage('Test') {
     steps {
         sh '''
             docker run --rm -d --name selenium-chrome \
-              -network jenkins-grid \
+              --network jenkins-grid \
               selenium/standalone-chrome:latest
 
             sleep 10
