@@ -25,7 +25,7 @@ stage('Test') {
     }
     post {
         always {
-            sh 'docker stop selenium-chrome || true'
+            sh 'cd api-test-framework && mvn test -Dselenium.remote=http://localhost:4444/wd/hub'
         }
     }
 }
