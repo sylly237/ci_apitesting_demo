@@ -13,11 +13,22 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'cd api-test-framework && mvn test'
-            }
+stage('Test') {
+    steps {
+        sh '''
+            docker run --rm -d --name selenium-chrome \
+              --network host \
+              selenium/standalone-chrome:latest
+            sleep 3
+            cd api-test-framework && mvn test -Dselenium.remote=true
+        '''
+    }
+    post {
+        always {
+            sh 'docker stop selenium-chrome || true'
         }
+    }
+}
 
         stage('Results') {
             steps {
