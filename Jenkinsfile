@@ -17,15 +17,24 @@ stage('Test') {
     steps {
         sh '''
             docker run --rm -d --name selenium-chrome \
-              --network host \
+              -p 4444:4444 \
               selenium/standalone-chrome:latest
-            sleep 3
-            cd api-test-framework && mvn test -Dselenium.remote=true
+
+            sleep 10
+
+            docker ps
+
+            curl http://localhost:4444/status
+
+            cd api-test-framework
+
+            mvn test -Dselenium.remote=http://localhost:4444/wd/hub
         '''
     }
+
     post {
         always {
-            sh 'cd api-test-framework && mvn test -Dselenium.remote=http://localhost:4444/wd/hub'
+            sh 'docker stop selenium-chrome || true'
         }
     }
 }
